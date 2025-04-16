@@ -16,11 +16,6 @@ class PlayingCard extends HTMLElement {
     this.shadowRoot.appendChild(content);
 
     this.updateCard();
-    this.shadowRoot.querySelector('.card').addEventListener('click', () => {
-      const flipped = this.getAttribute('flipped') === 'true';
-      this.setAttribute('flipped', (!flipped).toString());
-      this.shadowRoot.querySelector('.card').classList.toggle('flipped');
-    });
   }
 
   static get observedAttributes() {

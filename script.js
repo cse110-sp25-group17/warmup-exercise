@@ -19,11 +19,27 @@ function shuffle(deck) {
   return deck;
 }
 
-function createCardElement(card) {
+function createCardElement(card, index, total) {
   const cardEl = document.createElement('playing-card');
   cardEl.setAttribute('value', card.value);
   cardEl.setAttribute('suit', card.suit);
   cardEl.setAttribute('flipped', 'false');
+
+  // Flips top Card
+  cardEl.addEventListener('click', () => {
+    if (index === total - 1) {
+      const isFlipped = cardEl.getAttribute('flipped') === 'true';
+      cardEl.setAttribute('flipped', (!isFlipped).toString());
+    }
+  });
+
+  // Visual stacking (optional style)
+  const offsetX = 0.8;
+  const offsetY = 0.8;
+  cardEl.style.zIndex = index;
+  cardEl.style.position = 'absolute';
+  cardEl.style.transform = `translate(${index * offsetX}px, ${index * offsetY}px)`;
+
   return cardEl;
 }
 
@@ -32,8 +48,9 @@ let currentDeck = shuffle(createDeck());
 
 function renderDeck(deck) {
   deckContainer.innerHTML = '';
-  deck.forEach(card => {
-    const cardElement = createCardElement(card);
+  deckContainer.style.position = 'relative'; // Important for absolute stacking
+  deck.forEach((card, index) => {
+    const cardElement = createCardElement(card, index, deck.length);
     deckContainer.appendChild(cardElement);
   });
 }
