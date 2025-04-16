@@ -37,7 +37,7 @@
 }
 
 .card-back {
-  background: url('./card-back.png') center/cover no-repeat;
+  background: url('./assets/card-back.png') center/cover no-repeat;
   transform: rotateY(180deg);
 }
 
