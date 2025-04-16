@@ -32,7 +32,7 @@ function createCardElement(card) {
 
   const back = document.createElement('div');
   back.className = 'card-back';
-  back.textContent = '🂠';
+
 
   inner.appendChild(front);
   inner.appendChild(back);
@@ -48,7 +48,16 @@ function createCardElement(card) {
 const deckContainer = document.getElementById('deck-container');
 const deck = shuffle(createDeck());
 
-deck.forEach(card => {
-  const cardElement = createCardElement(card);
-  deckContainer.appendChild(cardElement);
+deck.forEach((card, i) => {
+  const cardEl = createCardElement(card);
+
+  // 控制堆叠顺序
+  cardEl.style.zIndex = i;
+
+  // 给每张牌一个微小偏移，参数可以自行调节
+  const offsetX = 0.8;  // 横向每张牌偏移 0.8px
+  const offsetY = 0.8;  // 纵向每张牌偏移 0.8px
+  cardEl.style.transform = `translate(${i * offsetX}px, ${i * offsetY}px)`;
+
+  deckContainer.appendChild(cardEl);
 });

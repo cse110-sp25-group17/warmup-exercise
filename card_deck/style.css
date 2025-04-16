@@ -5,15 +5,25 @@ body {
     color: white;
   }
   
-  #deck-container {
+  /*#deck-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
     padding: 20px;
+  }*/
+
+  #deck-container {
+    position: relative;    /* 新增：相对定位，作为绝对定位卡牌的父容器 */
+    width: 80px;           /* 设成一张牌的宽度 */
+    height: 120px;         /* 设成一张牌的高度 */
+    margin: 40px auto;     /* 可选：水平居中 */
   }
   
   .card {
+    position: absolute;  /* 新增：绝对定位 */
+    top: 0;              /* 堆到容器左上角 */
+    left: 0;
     width: 80px;
     height: 120px;
     background-color: white;
