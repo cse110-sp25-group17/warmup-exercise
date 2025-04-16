@@ -13,6 +13,7 @@ body {
     padding: 20px;
   }*/
 
+
   #deck-container {
     position: relative;    /* 新增：相对定位，作为绝对定位卡牌的父容器 */
     width: 80px;           /* 设成一张牌的宽度 */
@@ -67,5 +68,22 @@ body {
     background-image: url('image.png');
     background-size: cover;
     transform: rotateY(180deg);
+  }
+  
+  #deck-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    margin-top: 30px;
+    position: relative;
+  }
+  
+  #discard-pile {
+    position: relative;
+    width: 80px;
+    height: 120px;
+    border: 2px dashed #ffffff70;
+    border-radius: 8px;
   }
   

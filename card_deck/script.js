@@ -71,3 +71,23 @@ shuffleBtn.addEventListener('click', () => {
   deck = shuffle(createDeck());
   renderDeck();
 });
+
+const discardPile = document.getElementById('discard-pile');
+const nextBtn = document.getElementById('next-btn');
+
+nextBtn.addEventListener('click', () => {
+  if (deck.length === 0) return;
+
+  const topCard = deck.pop(); // remove top card
+  renderDeck(); // re-render to show the next card now on top
+
+  // create a copy of the card and move it to the discard pile
+  const discardCard = createCardElement(topCard, 0, 1);
+  discardCard.classList.add('flipped');
+  discardCard.style.position = 'absolute';
+  discardCard.style.transform = 'translate(0, 0) rotate(-5deg)';
+  discardCard.style.zIndex = 100 + Math.floor(Math.random() * 100); // stack randomness
+
+  discardPile.appendChild(discardCard);
+});
+
