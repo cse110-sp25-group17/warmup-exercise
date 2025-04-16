@@ -19,7 +19,7 @@ function shuffle(deck) {
   return deck;
 }
 
-function createCardElement(card) {
+function createCardElement(card, index, total) {
   const cardEl = document.createElement('div');
   cardEl.className = 'card';
 
@@ -33,31 +33,41 @@ function createCardElement(card) {
   const back = document.createElement('div');
   back.className = 'card-back';
 
-
   inner.appendChild(front);
   inner.appendChild(back);
   cardEl.appendChild(inner);
 
+  // Only allow flipping the top card
   cardEl.addEventListener('click', () => {
-    cardEl.classList.toggle('flipped');
+    if (index === total - 1) {
+      cardEl.classList.toggle('flipped');
+    }
   });
+
+  cardEl.style.zIndex = index;
+  const offsetX = 0.8;
+  const offsetY = 0.8;
+  cardEl.style.transform = `translate(${index * offsetX}px, ${index * offsetY}px)`;
 
   return cardEl;
 }
 
+
 const deckContainer = document.getElementById('deck-container');
-const deck = shuffle(createDeck());
+let deck = shuffle(createDeck());
 
-deck.forEach((card, i) => {
-  const cardEl = createCardElement(card);
+function renderDeck() {
+  deckContainer.innerHTML = '';
+  deck.forEach((card, i) => {
+    const cardEl = createCardElement(card, i, deck.length);
+    deckContainer.appendChild(cardEl);
+  });
+}
 
-  // 控制堆叠顺序
-  cardEl.style.zIndex = i;
+renderDeck();
 
-  // 给每张牌一个微小偏移，参数可以自行调节
-  const offsetX = 0.8;  // 横向每张牌偏移 0.8px
-  const offsetY = 0.8;  // 纵向每张牌偏移 0.8px
-  cardEl.style.transform = `translate(${i * offsetX}px, ${i * offsetY}px)`;
-
-  deckContainer.appendChild(cardEl);
+const shuffleBtn = document.getElementById('shuffle-btn');
+shuffleBtn.addEventListener('click', () => {
+  deck = shuffle(createDeck());
+  renderDeck();
 });
