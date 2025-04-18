@@ -25,15 +25,13 @@ function createCardElement(card, index, total) {
   cardEl.setAttribute('suit', card.suit);
   cardEl.setAttribute('flipped', 'false');
 
-  // Flips top Card
-  cardEl.addEventListener('click', () => {
-    if (index === total - 1) {
+  if (index === total - 1) {
+    cardEl.addEventListener('click', () => {
       const isFlipped = cardEl.getAttribute('flipped') === 'true';
       cardEl.setAttribute('flipped', (!isFlipped).toString());
-    }
-  });
+    });
+  }
 
-  // Visual stacking (optional style)
   const offsetX = 0.8;
   const offsetY = 0.8;
   cardEl.style.zIndex = index;
@@ -44,15 +42,27 @@ function createCardElement(card, index, total) {
 }
 
 const deckContainer = document.getElementById('deck-container');
+const discardPile = document.getElementById('discard-pile');
+
 let currentDeck = shuffle(createDeck());
 
 function renderDeck(deck) {
   deckContainer.innerHTML = '';
-  deckContainer.style.position = 'relative'; // Important for absolute stacking
   deck.forEach((card, index) => {
     const cardElement = createCardElement(card, index, deck.length);
     deckContainer.appendChild(cardElement);
   });
+}
+
+function discardCard(card) {
+  const cardEl = document.createElement('playing-card');
+  cardEl.setAttribute('value', card.value);
+  cardEl.setAttribute('suit', card.suit);
+  cardEl.setAttribute('flipped', 'true');
+  cardEl.style.position = 'absolute';
+  cardEl.style.transform = `translate(0, 0) rotate(${Math.random() * 10 - 5}deg)`;
+  cardEl.style.zIndex = 100 + Math.floor(Math.random() * 100);
+  discardPile.appendChild(cardEl);
 }
 
 renderDeck(currentDeck);
@@ -60,4 +70,12 @@ renderDeck(currentDeck);
 document.getElementById('shuffle-btn').addEventListener('click', () => {
   currentDeck = shuffle(createDeck());
   renderDeck(currentDeck);
+  discardPile.innerHTML = ''; // clear discard pile on shuffle
+});
+
+document.getElementById('next-btn').addEventListener('click', () => {
+  if (currentDeck.length === 0) return;
+  const topCard = currentDeck.pop();
+  renderDeck(currentDeck);
+  discardCard(topCard);
 });
