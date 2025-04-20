@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>Card Deck Demo</title>
+
+  <!-- Link to CSS for styling -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Import custom element module for playing cards -->
   <script type="module" src="playing-card.js"></script>
+
+  <!-- Script for controlling deck behavior (shuffle, next, etc.) -->
   <script defer src="script.js"></script>
 </head>
 <body>
   <h1>Deck of Cards</h1>
+
+  <!-- Buttons for user interaction eg: shuffle, next -->
   <button id="shuffle-btn">Shuffle Deck</button>
   <button id="next-btn">Next</button>
 
+   <!-- Main area to display the deck and discard pile -->
   <div id="deck-area">
+
+    <!-- Container to hold the deck of cards -->
     <div id="deck-container"></div>
+
+    <!-- Area to show discarded cards -->
     <div id="discard-pile"></div>
   </div>
 </body>

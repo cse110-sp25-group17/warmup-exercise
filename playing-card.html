@@ -1,13 +1,28 @@
+<!-- Template for a playing card component -->
 <template id="playing-card-template">
-  <link rel="stylesheet" href="./playing-card.css">
-  <div class="card">
-    <div class="card-inner">
-      <div class="card-face card-front">
-        <span class="corner top-left"></span>
-        <span class="suit"></span>
-        <span class="corner bottom-right"></span>
-      </div>
-      <div class="card-face card-back"></div>
-    </div>
-  </div>
+
+  <!-- Link to CSS for styling -->
+ <link rel="stylesheet" href="./playing-card.css">
+ 
+ <div class="card">
+
+   <!-- Inner wrapper to enable flipping -->
+   <div class="card-inner">
+     <!-- Front face of the card -->
+     <div class="card-face card-front">
+
+       <!-- Top-left corner value -->
+       <span class="corner top-left"></span>
+
+       <!-- Suit symbol (e.g., ♥, ♠) -->
+       <span class="suit"></span>
+
+       <!-- Bottom-right corner value -->
+       <span class="corner bottom-right"></span>
+     </div>
+
+     <!-- Back face of the card -->
+     <div class="card-face card-back"></div>
+   </div>
+ </div>
 </template>
