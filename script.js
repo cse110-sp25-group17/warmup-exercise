@@ -1,8 +1,21 @@
-//suits and values of the deck
-const suits = ['♠', '♥', '♦', '♣'];
-const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+// Deck of Cards Demo
+// ==================
+// 
+// 1. Make a fresh, full deck (52 cards).
+// 2. Shuffle the deck.
+// 3. Show the deck on screen as a stack.
+// 4. Draw the top card to a discard pile.
+// 5. Shuffle again at any time.
 
-//makes a 52 card deck
+const suits = ['♠', '♥', '♦', '♣']; //four suits
+const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']; // 13 faces 
+
+/*
+  This function creates the deck of cards
+
+  Returns an array of 52 objects: {suit:'♠', value:'A'}
+*/
+
 function createDeck() {
   const deck = [];
   for (let suit of suits) {
@@ -13,23 +26,33 @@ function createDeck() {
   return deck;
 }
 
-//shuffle deck with Fisher-Yates algorithm
+/*
+  This function shuffles the deck of cards
+
+  Returns an array of shuffled cards
+*/
+
 function shuffle(deck) {
   for (let i = deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1)); // pick random card
     [deck[i], deck[j]] = [deck[j], deck[i]];
   }
   return deck;
 }
 
-//create a card element to be visible and interactable
+
+/*
+  This function creates one card element for the page
+*/
+
 function createCardElement(card, index, total) {
   const cardEl = document.createElement('playing-card');
   cardEl.setAttribute('value', card.value);
   cardEl.setAttribute('suit', card.suit);
-  cardEl.setAttribute('flipped', 'false');
+  cardEl.setAttribute('flipped', 'false'); //start face down
 
-  //only interactable if on top
+  // lets the user flip only the top most card
+
   if (index === total - 1) {
     cardEl.addEventListener('click', () => {
       const isFlipped = cardEl.getAttribute('flipped') === 'true';
@@ -52,7 +75,10 @@ const discardPile = document.getElementById('discard-pile');
 
 let currentDeck = shuffle(createDeck());
 
-//render deck to deck container
+/*
+  This function shows the deck on the screen
+*/
+
 function renderDeck(deck) {
   deckContainer.innerHTML = '';
   deck.forEach((card, index) => {
@@ -61,7 +87,11 @@ function renderDeck(deck) {
   });
 }
 
-//moves a card to the discard pile with slight rotation
+
+/*
+  This function moves the card to the discard pile
+*/
+
 function discardCard(card) {
   const cardEl = document.createElement('playing-card');
   cardEl.setAttribute('value', card.value);
@@ -75,14 +105,16 @@ function discardCard(card) {
 
 renderDeck(currentDeck);
 
-//shuffle button functionality
+// Shuffle button: new deck + clear discard pile
+
 document.getElementById('shuffle-btn').addEventListener('click', () => {
   currentDeck = shuffle(createDeck());
   renderDeck(currentDeck);
   discardPile.innerHTML = ''; // clear discard pile on shuffle
 });
 
-//next button functionality
+// Next button: draw top card
+
 document.getElementById('next-btn').addEventListener('click', () => {
   if (currentDeck.length === 0) return;
   const topCard = currentDeck.pop();
