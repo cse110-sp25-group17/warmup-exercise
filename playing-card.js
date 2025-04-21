@@ -1,23 +1,31 @@
+/**
+ * HTML element representing a playing card with value, suit, and flip state.
+ * Extends HTMLElement to create a reusable web component.
+ */
 class PlayingCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
+  //loads the card template and sets up initial state.
   async connectedCallback() {
     const response = await fetch('./playing-card.html');
     const html = await response.text();
-
+    
+    //parse HTML to extract template
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     const template = tempDiv.querySelector('template');
 
+    //clone and append template to shadow 
     const content = template.content.cloneNode(true);
     this.shadowRoot.appendChild(content);
 
     this.updateCard();
   }
 
+  //returns array list of observed attributes
   static get observedAttributes() {
     return ['value', 'suit', 'flipped'];
   }
@@ -26,6 +34,7 @@ class PlayingCard extends HTMLElement {
     this.updateCard();
   }
 
+  //updates card
   updateCard() {
     const value = this.getAttribute('value') || 'A';
     const suit = this.getAttribute('suit') || '♠';
@@ -45,4 +54,5 @@ class PlayingCard extends HTMLElement {
   }
 }
 
+//register in the browser
 customElements.define('playing-card', PlayingCard);
