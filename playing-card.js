@@ -1,3 +1,4 @@
+
 // --------------------------------------------------
 // Custom Element: <playing-card>
 // --------------------------------------------------
@@ -5,22 +6,30 @@
 // It loads an external HTML template (playing-card.html) so we
 // don’t clutter this file with markup.
 
+/**
+ * HTML element representing a playing card with value, suit, and flip state.
+ * Extends HTMLElement to create a reusable web component.
+ */
 class PlayingCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
+  //loads the card template and sets up initial state.
   async connectedCallback() {
     // Fetch the template file once the card appears
     const response = await fetch('./playing-card.html');
     const html = await response.text();
-
+    
     // Pull out the <template> inside that file
+    
+    //parse HTML to extract template
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     const template = tempDiv.querySelector('template');
 
+    //clone and append template to shadow 
     const content = template.content.cloneNode(true);
     // Copy template content
     this.shadowRoot.appendChild(content);
@@ -30,6 +39,7 @@ class PlayingCard extends HTMLElement {
   }
 
   // Observe these attributes for changes
+  //returns array list of observed attribute
   static get observedAttributes() {
     return ['value', 'suit', 'flipped'];
   }
@@ -40,6 +50,7 @@ class PlayingCard extends HTMLElement {
   }
 
   // Put the right text/icons inside the template
+  //updates card
   updateCard() {
     const value = this.getAttribute('value') || 'A';
     const suit = this.getAttribute('suit') || '♠';
@@ -60,4 +71,5 @@ class PlayingCard extends HTMLElement {
   }
 }
 
+//register in the browser
 customElements.define('playing-card', PlayingCard);
